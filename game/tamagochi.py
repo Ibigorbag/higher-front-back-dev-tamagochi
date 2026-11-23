@@ -98,10 +98,10 @@ class Tamagochi(AbstractTamagochi):
 
     def __init__(self, name='Tama'):
         self._name = name  # Заготовка для возможности называть питомца.
-        self._hunger = 0
-        self._hp = 50
-        self._happiness = 100
-        self._energy = 100
+        self._hunger = 20
+        self._hp = 80
+        self._happiness = 50
+        self._energy = 80
 
     @staticmethod
     def _valid_range(value: int, lowest: int = 0, highest: int = 100) -> int:
