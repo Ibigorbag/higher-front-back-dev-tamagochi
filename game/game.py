@@ -140,10 +140,12 @@ class Game(AbstractGame):
     @check_availability('уложить спать')
     def rest_tamagochi(self) -> None:
         self.tamagochi.rest()
+        self.tamagochi.update()
 
     @check_availability('играть')
     def play_with_tamagochi(self) -> None:
         self.tamagochi.play()
+        self.tamagochi.update()
 
     def get_status(self) -> dict[str, Any]:
         tamagochi_status = self.tamagochi.status
@@ -196,6 +198,7 @@ class Game(AbstractGame):
         food = self._choose(self._food, 'Чем кормить? ')
         self.tamagochi.feed(food)
         self._food.remove(food)
+        self.tamagochi.update()
 
     @check_availability('лечить')
     def heal_tamagochi(self) -> None:

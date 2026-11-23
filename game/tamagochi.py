@@ -178,14 +178,12 @@ class Tamagochi(AbstractTamagochi):
         self.check_is_alive()
         self.hunger -= food.satiety
         self.happiness += food.satiety // 5
-        self.update()
 
     def play(self) -> None:
         self.check_is_alive()
         if self.energy >= 5:
             self.happiness += 20
             self.energy -= 5  # На игры уходит дополнительная энергия.
-            self.update()
         else:
             raise NotEnoughEnergy(
                     f'{self.name} слишком устал, чтобы играть'
@@ -196,7 +194,6 @@ class Tamagochi(AbstractTamagochi):
         if not self.is_sick():
             self.energy += 10
         self.energy += 10
-        self.update()
 
     def heal(self, medicine: Medicine) -> None:
         self.check_is_alive()
