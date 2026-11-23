@@ -158,7 +158,6 @@ class Game(AbstractGame):
             'happiness': tamagochi_status['happiness']
         }
 
-    @check_availability('работать')
     def work(self) -> int:
         # Честно говоря, я не очень понял, что от меня нужно
         # в плане реализации кликера, поэтому это скорее заглушка пока.
