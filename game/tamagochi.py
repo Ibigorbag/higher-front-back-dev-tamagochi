@@ -2,8 +2,8 @@
 
 from abc import ABC, abstractmethod
 
+from .exceptions import NotEnoughEnergy, TamagochiIsGone
 from .models import Food, Medicine
-from .exceptions import TamagochiIsGone, NotEnoughEnergy
 
 
 class AbstractTamagochi(ABC):

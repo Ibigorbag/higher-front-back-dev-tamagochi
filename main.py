@@ -1,9 +1,9 @@
 import os
 
-from game.models import Food, Medicine
 from game.clicker import Clicker
-from game.tamagochi import Tamagochi
 from game.game import Game
+from game.models import Food, Medicine
+from game.tamagochi import Tamagochi
 
 
 def main():

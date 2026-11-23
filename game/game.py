@@ -2,13 +2,13 @@
 
 from abc import ABC, abstractmethod
 from functools import wraps
-from typing import Any
 from time import sleep
+from typing import Any
 
-from .exceptions import GameError, InvalidChoice, NotEnoughMoney
-from .tamagochi import AbstractTamagochi
 from .clicker import AbstractClicker
+from .exceptions import GameError, InvalidChoice, NotEnoughMoney
 from .models import Food, Medicine
+from .tamagochi import AbstractTamagochi
 
 
 class AbstractGame(ABC):
