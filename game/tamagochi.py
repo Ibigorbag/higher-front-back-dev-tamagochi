@@ -187,5 +187,5 @@ class Tamagochi(AbstractTamagochi):
             'hunger': self.hunger,
             'happiness': self.happiness,
             'energy': self.energy,
-            'health': self.health
+            'hp': self.health
             }

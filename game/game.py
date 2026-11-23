@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from functools import wraps
+from random import randint
 from time import sleep
 from typing import Any
 
@@ -165,7 +166,7 @@ class Game(AbstractGame):
         tamagochi_status = self.tamagochi.status
         return {
             'hunger': tamagochi_status['hunger'],
-            'hp': tamagochi_status['health'],
+            'hp': tamagochi_status['hp'],
             'energy': tamagochi_status['energy'],
             'coins': self._money,
             # happiness Не используется в main, но является статусом тамагочи
@@ -176,17 +177,8 @@ class Game(AbstractGame):
     def work(self) -> int:
         # Честно говоря, я не очень понял, что от меня нужно
         # в плане реализации кликера, поэтому это скорее заглушка пока.
-        income = 0
-        print(
-         'нажмите enter чтобы копать золото'
-         'или введите любой символ, чтобы перестать'
-        )
-        while True:
-            if not input():
-                self.clicker.click()
-                income += self.clicker.income_per_click
-            else:
-                break
+        for _ in range(randint(1, 10)):
+            income = self.clicker.click()
 
         self._money += income
         self.tamagochi.update()
