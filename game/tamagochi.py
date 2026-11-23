@@ -163,7 +163,7 @@ class Tamagochi(AbstractTamagochi):
             self.energy -= 10
             self.happiness -= 5
         if self.hunger >= 75:
-            self.hp -= 10
+            #    self.hp -= 10
             self.happiness -= 5
             self.energy -= 5
         if self.happiness >= 75:
