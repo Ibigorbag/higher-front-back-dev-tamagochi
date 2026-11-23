@@ -201,7 +201,7 @@ class Tamagochi(AbstractTamagochi):
         self.check_is_alive()
         self.hp += medicine.heal_hp
         self.happiness -= 10  # Лекарства не вкусные и тамагочи их не любит.
-        self.update()
+    #    self.update()
 
     @property
     def status(self) -> dict[str, int]:
