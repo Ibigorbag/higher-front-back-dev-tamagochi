@@ -1,15 +1,13 @@
 """Модуль с интерфейсом и реализацией класса игры"""
 
 from abc import ABC, abstractmethod
-from functools import wraps
 from random import randint
-from time import sleep
 from typing import Any
 
 from .clicker import AbstractClicker
-from .exceptions import GameError, InvalidChoice, NotEnoughMoney
+from .exceptions import InvalidChoice, NotEnoughMoney
 from .models import Food, Medicine
-from .tamagochi import AbstractTamagochi
+from .tamagochi import AbstractTamagochi, check_availability
 
 
 class AbstractGame(ABC):
@@ -118,21 +116,6 @@ class Game(AbstractGame):
         self._food = []
         self._medicine = []
 
-    @staticmethod
-    def check_availability(action: str):
-        """Декоратор для обработки ошибок невозможности действий."""
-        def decorator(func):
-            @wraps(func)
-            def wrapper(self, *args, **kwargs):
-                try:
-                    return func(self, *args, **kwargs)
-                except GameError as e:
-                    print(f'Нельзя {action}: {e}')
-                    sleep(3)  # Чтобы можно было успеть прочесть
-                    return None
-            return wrapper
-        return decorator
-
     def _choose(self, items: list, prompt: str):
         """Метод для реализации интерфейса выбора предмета."""
         if not items:
@@ -177,11 +160,15 @@ class Game(AbstractGame):
     def work(self) -> int:
         # Честно говоря, я не очень понял, что от меня нужно
         # в плане реализации кликера, поэтому это скорее заглушка пока.
+        # уточните пожалуйста, тут стоит сделать полноценную миниигру с
+        # интерфейсом как в змейке или нужно что-то сделать в консоли?
+        income = 0
+
         for _ in range(randint(1, 10)):
-            income = self.clicker.click()
+            self.clicker.click()
+            income += self.clicker.income_per_click
 
         self._money += income
-        self.tamagochi.update()
         return income
 
     @check_availability('купить еду')

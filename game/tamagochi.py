@@ -1,9 +1,29 @@
 """Модуль с интерфейсом и реализациями класса тамагочи"""
 
 from abc import ABC, abstractmethod
+from functools import wraps
+from time import sleep
 
-from .exceptions import NotEnoughEnergy, TamagochiIsGone
+from .exceptions import GameError, NotEnoughEnergy, TamagochiIsGone
 from .models import Food, Medicine
+
+# Стоит вынести декоратор в отдельный файл, но это не поддерживается
+# архитектурой проекта.
+
+
+def check_availability(action: str):
+    """Декоратор для обработки ошибок невозможности действий."""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            try:
+                return func(self, *args, **kwargs)
+            except GameError as e:
+                print(f'Нельзя {action}: {e}')
+                sleep(3)  # Чтобы можно было успеть прочесть
+                return None
+        return wrapper
+    return decorator
 
 
 class AbstractTamagochi(ABC):
@@ -79,7 +99,7 @@ class Tamagochi(AbstractTamagochi):
     def __init__(self, name='Tama'):
         self._name = name  # Заготовка для возможности называть питомца.
         self._hunger = 0
-        self._health = 100
+        self._health = 50
         self._happiness = 100
         self._energy = 100
 
@@ -134,6 +154,9 @@ class Tamagochi(AbstractTamagochi):
     def is_sick(self) -> bool:
         return self.health <= 40
 
+    # Этот декоратор здесь - вынужденная мера из-за update,
+    # который напрямую вызывается в main.
+    @check_availability('продолжать')
     def update(self) -> None:
         self.check_is_alive()
         if self.is_sick():

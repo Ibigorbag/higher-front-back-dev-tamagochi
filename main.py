@@ -54,6 +54,8 @@ def main():
             case "1":
                 income = game.work()
                 output = f'Вы заработали {income} монет'
+                # Мне кажется странным обновелние состояния здесь
+                # а не в game.work.
                 game.tamagochi.update()
             case "2":
                 game.buy_food()
