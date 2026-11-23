@@ -1,9 +1,21 @@
 """Модуль с исключениями"""
 
 
-class TamagochiIsGone(Exception):
-    """Ошибка при смерти тамагочи"""
+class GameError(Exception):
+    """Абстрактное исключение для игровых ситуаций."""
 
 
-class NotEnoughMoney(Exception):
-    """Ошибка когда не хватает монет для покупки"""
+class TamagochiIsGone(GameError):
+    """Ошибка при смерти тамагочи."""
+
+
+class NotEnoughMoney(GameError):
+    """Ошибка когда не хватает монет для покупки."""
+
+
+class NotEnoughEnergy(GameError):
+    """Ошибка когда не хватает энергии для игры с питомцем."""
+
+
+class InvalidChoice(GameError):
+    """Ошибка когда выбран несуществующий вариант."""

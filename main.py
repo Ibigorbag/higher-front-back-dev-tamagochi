@@ -1,6 +1,9 @@
 import os
 
 from game.models import Food, Medicine
+from game.clicker import Clicker
+from game.tamagochi import Tamagochi
+from game.game import Game
 
 
 def main():
@@ -14,20 +17,22 @@ def main():
         Medicine(name='Ибупрофен', price=30, heal_hp=20, number_of_uses=2)
     ]
 
-    tamagochi = SimpleTamagochi()  #  Вместо SimpleTamagochi импортируйте и создайте инстанс от своей реализации
-    clicker = SimpleRandomClicker(10, 20) #  Вместо SimpleRandomClicker импортируйте и создайте инстанс от своей реализации
-    game = SimpleGame(tamagochi, clicker, all_food=all_food, all_medicine=all_medicine) #  Вместо SimpleGame импортируйте и создайте инстанс от своей реализации
+    tamagochi = Tamagochi()
+    clicker = Clicker()
+    game = Game(tamagochi, clicker,
+                all_food=all_food, all_medicine=all_medicine)
 
     print("Добро пожаловать в Тамагочи-кликер!")
     output = ''
 
     while True:
         print(output)
-
         print(f"Сумка с едой: {game.food}")
         print(f"Сумка с лекарствами: {game.medicine}")
 
         status = game.get_status()
+        # Не понимаю, почему не указывается счастье,
+        # но пока трогать прекод не стану.
         print(
             f"\nСтатус: голод {status['hunger']}, здоровье {status['hp']}, "
             f"энергия {status['energy']}, монет {status['coins']}\n"
@@ -35,6 +40,7 @@ def main():
         if game.tamagochi.is_sick():
             print("=======Тамагочи болеет======")
             print("=======Отдых действует менее эффективно=======")
+
         print("1. Пойти на работу")
         print("2. Купить еду")
         print("3. Купить лекарство")
@@ -55,7 +61,6 @@ def main():
                 game.buy_medicine()
             case "4":
                 game.feed_tamagochi()
-
             case "5":
                 game.heal_tamagochi()
             case "6":
@@ -68,7 +73,6 @@ def main():
                 break
             case _:
                 output = "Неверная команда"
-
         os.system('clear')
 
 
