@@ -160,7 +160,6 @@ class Tamagochi(AbstractTamagochi):
     def update(self) -> None:
         self.check_is_alive()
         if self.is_sick():
-            self.hp -= 5
             self.energy -= 10
         if self.hunger >= 75:
             self.hp -= 10
@@ -202,6 +201,7 @@ class Tamagochi(AbstractTamagochi):
         self.check_is_alive()
         self.hp += medicine.heal_hp
         self.happiness -= 10  # Лекарства не вкусные и тамагочи их не любит.
+        self.update()
 
     @property
     def status(self) -> dict[str, int]:
