@@ -148,14 +148,9 @@ class Game(AbstractGame):
         self.tamagochi.update()
 
     def get_status(self) -> dict[str, Any]:
-        tamagochi_status = self.tamagochi.status
         return {
-            'hunger': tamagochi_status['hunger'],
-            'hp': tamagochi_status['hp'],
-            'energy': tamagochi_status['energy'],
-            'coins': self._money,
-            # happiness Не используется в main, но является статусом тамагочи
-            'happiness': tamagochi_status['happiness']
+            **self.tamagochi.status,
+            'coins': self._money
         }
 
     def work(self) -> int:
