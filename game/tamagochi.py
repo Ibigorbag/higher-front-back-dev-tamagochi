@@ -99,7 +99,7 @@ class Tamagochi(AbstractTamagochi):
     def __init__(self, name='Tama'):
         self._name = name  # Заготовка для возможности называть питомца.
         self._hunger = 0
-        self._health = 50
+        self._hp = 50
         self._happiness = 100
         self._energy = 100
 
@@ -137,22 +137,22 @@ class Tamagochi(AbstractTamagochi):
         self._energy = self._valid_range(value)
 
     @property
-    def health(self) -> int:
-        return self._health
+    def hp(self) -> int:
+        return self._hp
 
-    @health.setter
-    def health(self, value: int) -> None:
-        self._health = self._valid_range(value)
+    @hp.setter
+    def hp(self, value: int) -> None:
+        self._hp = self._valid_range(value)
 
     def is_alive(self) -> bool:
-        return self._health > 0
+        return self._hp > 0
 
     def check_is_alive(self) -> None:
         if not self.is_alive():
             raise TamagochiIsGone(f'{self.name} умер')
 
     def is_sick(self) -> bool:
-        return self.health <= 40
+        return self.hp <= 40
 
     # Этот декоратор здесь - вынужденная мера из-за update,
     # который напрямую вызывается в main.
@@ -160,14 +160,14 @@ class Tamagochi(AbstractTamagochi):
     def update(self) -> None:
         self.check_is_alive()
         if self.is_sick():
-            self.health -= 5
+            self.hp -= 5
             self.energy -= 10
         if self.hunger >= 75:
-            self.health -= 10
+            self.hp -= 10
             self.happiness -= 5
             self.energy -= 5
         if self.happiness >= 75:
-            self.health += 2
+            self.hp += 2
             self.energy += 2
 
         self.hunger += 3
@@ -200,7 +200,7 @@ class Tamagochi(AbstractTamagochi):
 
     def heal(self, medicine: Medicine) -> None:
         self.check_is_alive()
-        self.health += medicine.heal_hp
+        self.hp += medicine.heal_hp
         self.happiness -= 10  # Лекарства не вкусные и тамагочи их не любит.
         self.update()
 
@@ -210,5 +210,5 @@ class Tamagochi(AbstractTamagochi):
             'hunger': self.hunger,
             'happiness': self.happiness,
             'energy': self.energy,
-            'hp': self.health
+            'hp': self.hp
             }
