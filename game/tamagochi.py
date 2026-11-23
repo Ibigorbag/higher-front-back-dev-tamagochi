@@ -161,13 +161,14 @@ class Tamagochi(AbstractTamagochi):
         self.check_is_alive()
         if self.is_sick():
             self.energy -= 10
+            self.happiness -= 5
         if self.hunger >= 75:
             self.hp -= 10
             self.happiness -= 5
             self.energy -= 5
         if self.happiness >= 75:
-        #    self.hp += 2
-            self.energy += 2
+            # Будем считать, что довольный Тамагочи бодрее.
+            self.energy += 3
 
         self.hunger += 3
         self.energy -= 5
