@@ -204,3 +204,4 @@ class Game(AbstractGame):
         medicine.uses += 1
         if medicine.is_empty():
             self._medicine.remove(medicine)
+        self.tamagochi.update()
