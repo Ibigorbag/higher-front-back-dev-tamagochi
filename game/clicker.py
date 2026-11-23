@@ -26,25 +26,14 @@ class AbstractClicker(ABC):
 class Clicker(AbstractClicker):
     def __init__(self, income_per_click=1) -> None:
         self._income_per_click = income_per_click
-        self._total_income = 0
 
     @property
     def income_per_click(self) -> int:
         return self._income_per_click
 
     def click(self) -> None:
+        # Странно, что по ТЗ кликер ничего кроме дохода за клик не возвращает.
+        # Т.е. это метод для накапливания монет, но у кликера нет метода для
+        # возврата накопленных монет, поэтому их придется считать в game,
+        # т.к. иначе падают автотесты.
         print('дзынь!')
-        self._total_income += self.income_per_click
-
-    def play(self) -> int:
-        """Метод для процесса игры и возврата монет."""
-        print(
-         'нажмите enter чтобы копать золото'
-         'или введите любой символ, чтобы перестать'
-        )
-        while True:
-            if not input():
-                self.click()
-            else:
-                break
-        return self._total_income

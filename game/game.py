@@ -174,7 +174,20 @@ class Game(AbstractGame):
 
     @check_availability('работать')
     def work(self) -> int:
-        income = self.clicker.play()
+        # Честно говоря, я не очень понял, что от меня нужно
+        # в плане реализации кликера, поэтому это скорее заглушка пока.
+        income = 0
+        print(
+         'нажмите enter чтобы копать золото'
+         'или введите любой символ, чтобы перестать'
+        )
+        while True:
+            if not input():
+                self.clicker.click()
+                income += self.clicker.income_per_click
+            else:
+                break
+
         self._money += income
         self.tamagochi.update()
         return income
