@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass
 
+from .exceptions import NotEnoughUses
+
 
 @dataclass(frozen=True, slots=True)
 class Food:
@@ -42,3 +44,12 @@ class Medicine:
             f'использований: {self.number_of_uses - self.uses}/'
             f'{self.number_of_uses}'
         )
+
+    def use(self) -> None:
+        """
+        Метод для учета расхода медицины,
+        который вызывается при использовании.
+        """
+        if self.uses == self.number_of_uses:
+            raise NotEnoughUses('Недостаточно лекарств')
+        self.uses += 1

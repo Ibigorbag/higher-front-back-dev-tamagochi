@@ -17,5 +17,9 @@ class NotEnoughEnergy(GameError):
     """Ошибка когда не хватает энергии для игры с питомцем."""
 
 
+class NotEnoughUses(GameError):
+    """Ошибка когда не хватает использований предмета."""
+
+
 class InvalidChoice(GameError):
     """Ошибка когда выбран несуществующий вариант."""

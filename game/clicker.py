@@ -1,6 +1,10 @@
 """Модуль с интерфейсом и реализацией кликера"""
 
 from abc import ABC, abstractmethod
+from random import randint
+
+MAX_INCOME = 5
+MIN_INCOME = 1
 
 
 class AbstractClicker(ABC):
@@ -24,17 +28,26 @@ class AbstractClicker(ABC):
 
 
 class Clicker(AbstractClicker):
-    def __init__(self, income_per_click=1) -> None:
-        self._income_per_click = income_per_click
-        self._current_income = 0
+    """Класс для реализации кликера."""
+
+    def __init__(self) -> None:
+        """Инициализация класса кликера."""
+        self._income_per_click = None
+        self.min_income = MIN_INCOME
+        self.max_income = MAX_INCOME
 
     @property
     def income_per_click(self) -> int:
+        """
+        Метод для возврата монет за клик.
+
+        :return: доход за один клик
+        """
         return self._income_per_click
 
     def click(self) -> None:
-        # Странно, что по ТЗ кликер ничего кроме дохода за клик не возвращает.
-        # Т.е. это метод для накапливания монет, но у кликера нет метода для
-        # возврата накопленных монет, поэтому приходится считать их в game,
-        # т.к. иначе падает тест.
-        pass
+        """Метод для случайного определения дохода за клик."""
+        # Сделаю передачу монет через self,
+        # чтобы не нарушать аннотацию из прекода.
+        self._income_per_click = randint(self.min_income,
+                                         self.max_income)
