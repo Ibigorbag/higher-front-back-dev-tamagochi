@@ -6,7 +6,6 @@ from .decorators import check_availability
 from .exceptions import NotEnoughEnergy, TamagochiIsGone
 from .models import Food, Medicine
 
-
 INITIAL_HP = 80
 INITIAL_HUNGER = 20
 INITIAL_HAPPINESS = 50
