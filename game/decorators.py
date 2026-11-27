@@ -3,7 +3,6 @@ from functools import wraps
 from time import sleep
 from typing import ParamSpec, TypeVar
 
-
 from .exceptions import GameError
 
 P = ParamSpec("P")
