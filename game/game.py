@@ -11,7 +11,6 @@ from .exceptions import InvalidChoice, NotEnoughMoney
 from .models import Food, Medicine
 from .tamagochi import AbstractTamagochi
 
-
 INITIAL_COINS = 100
 
 

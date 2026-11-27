@@ -1,6 +1,8 @@
-from time import sleep
-from typing import Callable, ParamSpec, TypeVar
+from collections.abc import Callable
 from functools import wraps
+from time import sleep
+from typing import ParamSpec, TypeVar
+
 
 from .exceptions import GameError
 
