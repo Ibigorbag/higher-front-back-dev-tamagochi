@@ -12,6 +12,27 @@ INITIAL_HUNGER = 20
 INITIAL_HAPPINESS = 50
 INITIAL_ENERGY = 80
 
+SICKNESS_THRESHOLD = 40
+HUNGER_THRESHOLD = 75
+HAPPINESS_THRESHOLD = 70
+
+SICKNESS_HP_DRAIN = 10
+SICKNESS_HAPPINESS_DRAIN = 5
+SICKNESS_ENERGY_DRAIN = 10
+
+HUNGER_HP_DRAIN = 10
+HUNGER_HAPPINESS_DRAIN = 5
+HUNGER_ENERGY_DRAIN = 5
+
+HAPPINESS_ENERGY_BOOST = 5
+
+HUNGER_ACCUMULATION = 3
+ENERGY_DRAIN = 5
+HAPPINESS_DRAIN = 5
+
+REST_ENERGY_GAIN = 10
+PLAY_HAPPINESS_GAIN = 20
+
 
 class AbstractTamagochi(ABC):
     """Интерфейс логики тамагочи"""
@@ -228,19 +249,20 @@ class Tamagochi(AbstractTamagochi):
         """
         self.check_is_alive()
         if self.is_sick():
-            self.energy -= 10
-            self.happiness -= 5
-        if self.hunger >= 75:
-            self.hp -= 10
-            self.happiness -= 5
-            self.energy -= 5
-        if self.happiness >= 75:
+            self.energy -= SICKNESS_ENERGY_DRAIN
+            self.happiness -= SICKNESS_HAPPINESS_DRAIN
+            self.hp -= SICKNESS_HP_DRAIN
+        if self.hunger >= HUNGER_THRESHOLD:
+            self.hp -= HUNGER_HP_DRAIN
+            self.happiness -= HUNGER_HAPPINESS_DRAIN
+            self.energy -= HUNGER_ENERGY_DRAIN
+        if self.happiness >= HAPPINESS_THRESHOLD:
             # Будем считать, что довольный Тамагочи бодрее.
-            self.energy += 3
+            self.energy += HAPPINESS_ENERGY_BOOST
 
-        self.hunger += 3
-        self.energy -= 5
-        self.happiness -= 5
+        self.hunger += HUNGER_ACCUMULATION
+        self.energy -= ENERGY_DRAIN
+        self.happiness -= HAPPINESS_DRAIN
 
     def feed(self, food: Food) -> None:
         """
@@ -262,9 +284,9 @@ class Tamagochi(AbstractTamagochi):
         :raises NotEnoughEnergy: если энергии меньше 5
         """
         self.check_is_alive()
-        if self.energy >= 5:
-            self.happiness += 20
-            self.energy -= 5  # На игры уходит дополнительная энергия.
+        if self.energy >= ENERGY_DRAIN:
+            self.happiness += PLAY_HAPPINESS_GAIN
+            self.energy -= ENERGY_DRAIN  # На игры уходит больше энергии.
         else:
             raise NotEnoughEnergy(
                     f'{self.name} слишком устал, чтобы играть'
@@ -278,8 +300,8 @@ class Tamagochi(AbstractTamagochi):
         """
         self.check_is_alive()
         if not self.is_sick():
-            self.energy += 10
-        self.energy += 10
+            self.energy += REST_ENERGY_GAIN
+        self.energy += REST_ENERGY_GAIN
 
     def heal(self, medicine: Medicine) -> None:
         """
@@ -290,7 +312,8 @@ class Tamagochi(AbstractTamagochi):
         """
         self.check_is_alive()
         self.hp += medicine.heal_hp
-        self.happiness -= 10  # Лекарства не вкусные и тамагочи их не любит.
+        # Лекарства не слишком вкусные и тамагочи их не любит.
+        self.happiness -= HAPPINESS_DRAIN
 
     @property
     def status(self) -> dict[str, int]:
