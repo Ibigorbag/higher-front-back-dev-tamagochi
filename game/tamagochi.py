@@ -7,6 +7,12 @@ from .exceptions import NotEnoughEnergy, TamagochiIsGone
 from .models import Food, Medicine
 
 
+INITIAL_HP = 80
+INITIAL_HUNGER = 20
+INITIAL_HAPPINESS = 50
+INITIAL_ENERGY = 80
+
+
 class AbstractTamagochi(ABC):
     """Интерфейс логики тамагочи"""
 
@@ -85,10 +91,10 @@ class Tamagochi(AbstractTamagochi):
         :param name: имя тамагочи
         """
         self._name = name  # Заготовка для возможности называть питомца.
-        self._hunger = 20
-        self._hp = 80
-        self._happiness = 50
-        self._energy = 80
+        self._hunger = INITIAL_HUNGER
+        self._hp = INITIAL_HP
+        self._happiness = INITIAL_HAPPINESS
+        self._energy = INITIAL_ENERGY
 
     @staticmethod
     def _valid_range(value: int, lowest: int = 0, highest: int = 100) -> int:

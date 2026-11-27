@@ -31,8 +31,6 @@ def main():
         print(f"Сумка с лекарствами: {game.medicine}")
 
         status = game.get_status()
-        # Не понимаю, почему не указывается счастье,
-        # но пока трогать прекод не стану.
         print(
             f"\nСтатус: голод {status['hunger']}, здоровье {status['hp']}, "
             f"энергия {status['energy']}, монет {status['coins']}\n"
@@ -54,7 +52,7 @@ def main():
             case "1":
                 income = game.work()
                 output = f'Вы заработали {income} монет'
-                # Мне кажется странным обновелние состояния здесь
+                # Мне кажется странным обновление состояния здесь
                 # а не в game.work.
                 game.tamagochi.update()
             case "2":
@@ -76,6 +74,10 @@ def main():
             case _:
                 output = "Неверная команда"
         os.system('clear')
+
+        if not game.tamagochi.is_alive():
+            print(f'{tamagochi.name} умер. Игра окончена.')
+            break
 
 
 if __name__ == "__main__":

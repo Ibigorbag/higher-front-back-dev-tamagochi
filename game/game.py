@@ -12,6 +12,9 @@ from .models import Food, Medicine
 from .tamagochi import AbstractTamagochi
 
 
+INITIAL_COINS = 100
+
+
 class AbstractGame(ABC):
     """Интерфейс для логики игры"""
 
@@ -124,7 +127,7 @@ class Game(AbstractGame):
         :param all_medicine: все доступные варианты лекарств
         """
         super().__init__(tamagochi, clicker, all_food, all_medicine)
-        self._money = 100
+        self._money = INITIAL_COINS
         self._food = []
         self._medicine = []
 
